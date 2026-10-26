@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>REVÉ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf6ef;--cd:#fff;--tx:#1f1a14;--mu:#85796a;--go:#b8893b;--ln:#e8dfd0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14110d;--cd:#1e1a15;--tx:#f4ecdf;--mu:#a99d8b;--go:#d4a85a;--ln:#322b22}}
+:root[data-theme="dark"]{--bg:#14110d;--cd:#1e1a15;--tx:#f4ecdf;--mu:#a99d8b;--go:#d4a85a;--ln:#322b22}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.w{max-width:1040px;margin:0 auto;padding:0 16px 40px}
+.hero{text-align:center;padding:36px 0 18px}
+.hero small{letter-spacing:.3em;color:var(--go);font-size:.75rem}
+h1,h2,.sr{font-family:"Playfair Display",Georgia,serif}
+h1{font-size:clamp(2rem,6vw,3.2rem);margin:6px 0;font-weight:700}
+.hero p{color:var(--mu);margin:0}
+.tabs{display:flex;justify-content:center;gap:6px;border-bottom:1px solid var(--ln);margin:16px 0}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);padding:10px 14px;font:inherit;cursor:pointer}
+.tabs button.on{color:var(--go);border-color:var(--go);font-weight:600}
+.pl{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.pl button,.pill{border:1px solid var(--ln);background:var(--cd);color:var(--tx);border-radius:99px;padding:6px 14px;font:inherit;font-size:.88rem;cursor:pointer}
+.pl button.on{background:var(--go);border-color:var(--go);color:#fff}
+input{width:100%;box-sizing:border-box;padding:12px 16px;border:1px solid var(--ln);border-radius:12px;background:var(--cd);color:var(--tx);font:inherit;margin:8px 0}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px;margin-top:12px}
+.c{background:var(--cd);border:1px solid var(--ln);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.im{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.6rem;position:relative}
+.im:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.28),transparent 60%)}
+.im span{position:relative;z-index:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.bd{padding:12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.sr{font-size:1.1rem;font-weight:500}
+.mu{color:var(--mu);font-size:.82rem}.tag{color:var(--go);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.ac{display:flex;gap:6px;margin-top:auto;padding-top:8px}
+.ac button{flex:1;padding:8px 4px;border-radius:9px;font:inherit;font-size:.8rem;cursor:pointer;border:1px solid var(--go);background:none;color:var(--go)}
+.ac button+button{background:var(--go);color:#fff}
+.row{display:flex;gap:12px;align-items:center;background:var(--cd);border:1px solid var(--ln);border-radius:14px;margin:10px 0;overflow:hidden}
+.row .im{height:78px;width:84px;font-size:2.2rem;flex:none}
+.tot{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:14px 0}
+.tot div{background:var(--cd);border:1px solid var(--ln);border-radius:12px;padding:10px 4px}.tot b{display:block;font-size:1.4rem;font-family:"Playfair Display",Georgia,serif}
+.bar{display:flex;height:9px;border-radius:9px;overflow:hidden;background:var(--ln)}
+.go{background:var(--go);color:#fff;border:0;border-radius:10px;padding:10px 18px;font:inherit;cursor:pointer;margin:6px 6px 6px 0}
+.x{border:0;background:none;color:var(--mu);font-size:1.1rem;cursor:pointer;margin-left:auto;padding:12px}
+.hide{display:none}
+.c{position:relative}
+.fv{position:absolute;top:8px;right:8px;z-index:2;background:rgba(0,0,0,.4);border:0;border-radius:99px;width:34px;height:34px;font-size:1.05rem;cursor:pointer}
+.m{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:9;padding:12px}
+.m.hide{display:none}
+.mb{background:var(--bg);width:100%;max-width:560px;max-height:90vh;overflow:auto;border-radius:20px;padding-bottom:10px}
+.mb h3{font-family:"Playfair Display",Georgia,serif;margin:16px 0 6px}.mb li{margin:3px 0}
+.im svg{position:absolute;inset:0;width:100%;height:100%}.mb .im{height:190px}
+</style></head><body><div class="w">
+<div class="hero"><div class="pl" style="justify-content:flex-end"><button id="lEN" onclick="setL('en')">EN</button><button id="lTR" onclick="setL('tr')">TR</button></div><small style="font-size:1.1rem;font-weight:700">REVÉ</small><h1 id="h1"></h1><p id="hp"></p></div>
+<div class="tabs"><button id="t0" class="on" onclick="tab(0)"></button><button id="t1" onclick="tab(1)"></button><button id="t2" onclick="tab(2)"></button></div>
+
+<section id="p0"><input id="q" placeholder="" oninput="q=this.value;list()">
+<div class="pl" id="cats"></div><div class="pl" id="diet"></div><div class="g" id="grid"></div>
+<p class="mu" id="age" style="margin-top:18px"></p></section>
+
+<section id="p1" class="hide"><h2 id="mh" style="margin:6px 0"></h2><p class="mu" id="mpp"></p>
+<div class="pl" id="prof"></div><div id="menu"></div></section>
+
+<section id="p2" class="hide"><h2 id="meh" style="margin:6px 0"></h2><div id="meal"></div></section>
+<p class="mu" id="ft" style="text-align:center;margin-top:30px"></p>
+</div>
+<div class="m hide" id="m" onclick="if(event.target==this)cm()"><div class="mb" id="mb"></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const C=["Başlangıç","Kahvaltı","Ana yemek","Ara sıcak","Tatlı","Alkolsüz içecek","Alkollü içecek"];
+const P={A:"Akdeniz",U:"Uzak Doğu",N:"Anadolu Modern",L:"Latin"},H={A:200,U:335,N:28,L:145};
+const D=[`A|Fırın incirli labne|🍯|210|8|20|11|incir,labne,bal,kekik,ceviz
+A|Narlı pancar carpaccio|🥗|150|4|16|8|pancar,nar,keçi peyniri,fındık,zeytinyağı
+U|Soğuk soba salatası|🍜|290|10|44|8|soba,salatalık,susam,soya sosu,zencefil
+U|Mangolu avokado tartar|🥑|240|3|22|16|avokado,mango,lime,kırmızı biber,kişniş
+N|Sumaklı bal kabağı humus|🎃|230|7|20|14|bal kabağı,nohut,tahin,fıstık,sumak
+N|Cevizli muhammara yoğurt|🌶️|220|6|14|16|kırmızı biber,ceviz,nar ekşisi,yoğurt,pul biber
+L|Ananaslı ceviche|🍋|170|18|14|4|levrek,ananas,lime,kırmızı soğan,jalapeno
+L|Mısırlı guakamole tostada|🌽|260|6|30|13|mısır,avokado,lime,tortilla,kişniş
+A|Burrata ve kavun carpaccio|🍈|260|11|12|19|burrata,kavun,nane,zeytinyağı,fıstık
+A|Kuru domatesli fava|🫘|200|9|24|8|bakla,kuru domates,dereotu,limon,zeytinyağı
+A|Enginarlı çiğ ton|🐟|180|20|8|8|ton balığı,enginar,limon,kapari,zeytinyağı
+A|Şeftalili prosciutto rulo|🍑|190|10|14|10|şeftali,prosciutto,roka,balsamik,parmesan
+A|Nar soslu fırın kuşkonmaz|🌿|120|5|11|7|kuşkonmaz,nar ekşisi,badem,limon,zeytinyağı
+A|Portakallı rezene salatası|🍊|140|3|17|7|rezene,portakal,siyah zeytin,nane,zeytinyağı
+A|Ahtapot patates carpaccio|🐙|230|22|16|9|ahtapot,patates,kapari,limon,maydanoz
+A|Mozzarellalı domates tartar|🍅|210|11|9|15|domates,mozzarella,fesleğen,sarımsak,zeytinyağı
+A|Keçi peynirli ballı kuru incir|🧀|240|8|26|12|keçi peyniri,kuru incir,bal,ceviz,kekik
+A|Narlı yoğurtlu kereviz carpaccio|🥣|130|4|14|7|kereviz,yoğurt,nar,limon,dereotu
+U|Susamlı edamame ezmesi|🫛|190|11|15|10|edamame,susam,limon,sarımsak,zeytinyağı
+U|Wasabili ton poke|🍣|260|24|20|9|ton balığı,pirinç,wasabi,avokado,soya sosu
+U|Karidesli pirinç kâğıdı rulo|🌯|160|7|24|4|pirinç kâğıdı,karides,nane,havuç,fıstık
+U|Kimchili salatalık|🥒|60|2|10|1|salatalık,kimchi,susam,sarımsak,pirinç sirkesi
+U|Zencefilli kabak shot çorba|🥣|120|3|18|5|kabak,zencefil,hindistan cevizi sütü,lime,kişniş
+U|Tofulu sebze salatası|🥗|210|14|14|11|tofu,havuç,lahana,susam,yer fıstığı
+U|Misolu patlıcan tartar|🍆|170|4|17|10|patlıcan,miso,susam,yeşil soğan,mirin
+U|Yuzu soslu levrek sashimi|🐟|150|22|4|5|levrek,yuzu,turp,soya sosu,susam
+U|Mangolu karides rulo|🍤|180|14|20|5|karides,mango,pirinç kâğıdı,nane,lime
+U|Soya glazeli enoki sarma|🍄|110|5|12|4|enoki,soya sosu,susam,yeşil soğan,zencefil
+N|Nar ekşili çiğ köfte tartar|🥩|240|14|20|12|bulgur,nar ekşisi,pul biber,maydanoz,domates salçası
+N|Fıstıklı yoğurtlu közlenmiş patlıcan|🍆|210|6|16|14|patlıcan,yoğurt,antep fıstığı,sarımsak,nane
+N|Ayvalı kereviz salatası|🍐|140|2|20|6|ayva,kereviz,ceviz,limon,zeytinyağı
+N|Pastırmalı kavun|🍈|190|12|14|10|pastırma,kavun,nane,pul biber,kaşar
+N|Dereotlu çökelek topları|🧆|170|9|8|11|çökelek,dereotu,ceviz,pul biber,kekik
+N|Pekmezli ceviz ezmeli semizotu|🥬|160|4|14|10|semizotu,ceviz,pekmez,yoğurt,sarımsak
+N|Tahinli turp nar salatası|🥗|150|4|16|9|turp,nar,tahin,maydanoz,limon
+N|Şalgam soslu kuru kayısı|🍑|180|4|24|8|kuru kayısı,şalgam,ceviz,yoğurt,nane
+N|Mantarlı fındıklı yaprak sarma|🍄|190|5|20|10|asma yaprağı,mantar,fındık,pirinç,nane
+N|Yoğurtlu közlenmiş kapya biber|🌶️|130|4|12|8|kapya biber,yoğurt,sarımsak,nane,zeytinyağı
+N|Kayısılı kuzu pastırma sarma|🍖|230|16|12|13|kuzu eti,kayısı,tahin,nane,pul biber
+L|Ahududulu mango ceviche|🥭|140|12|18|3|karides,mango,ahududu,lime,jalapeno
+L|Elote sokak mısırı|🌽|230|7|28|11|mısır,mayonez,peynir,lime,pul biber
+L|Poblano biberli kinoa salata|🥗|210|8|30|7|kinoa,poblano biber,fasulye,mısır,kişniş
+L|Nachos ve taze guacamole|🥑|290|5|32|17|avokado,nachos,lime,domates,soğan
+L|Kakaolu fasulye ezme|🫘|190|8|24|6|kuru fasulye,kakao,sarımsak,kimyon,lime
+L|Mini balıklı taco|🌮|200|13|20|8|beyaz balık,tortilla,lahana,lime,kişniş
+L|Jicama portakal salatası|🍊|110|2|24|1|jicama,portakal,lime,pul biber,nane
+L|Chipotle tavuklu tostada|🍗|230|17|22|9|tavuk,tortilla,chipotle,avokado,lime
+L|Jamonlu patates croquetas|🥔|210|5|26|9|patates,jamon,galeta,sarımsak,maydanoz
+L|Ananaslı pico de gallo|🍍|90|1|20|1|ananas,domates,kırmızı soğan,jalapeno,lime
+L|Habanero mango guac|🥑|240|3|22|16|avokado,mango,habanero,lime,kişniş`,
+`A|Şakşuka yumurtalı bruschetta|🍳|340|15|30|18|yumurta,patlıcan,domates,ekmek,fesleğen
+A|Ricotta incir ballı tost|🥪|360|13|42|15|ricotta,incir,bal,ekmek,kekik
+U|Matcha yulaf kasesi|🍵|310|11|44|9|yulaf,matcha,süt,muz,chia
+U|Miso yumurtalı pirinç kasesi|🍚|380|16|48|12|pirinç,yumurta,miso,yeşil soğan,susam
+N|Tahin pekmezli granola|🥣|350|10|50|13|yulaf,tahin,pekmez,yoğurt,fındık
+N|Çökelekli ıspanaklı gözleme|🥬|330|14|40|12|yufka,çökelek,ıspanak,tereyağı,nane
+L|Huevos rancheros bowl|🌮|420|20|40|20|yumurta,kuru fasulye,tortilla,domates,avokado
+L|Mangolu chia puding|🥭|250|6|34|10|chia,hindistan cevizi sütü,mango,lime,bal
+A|Labneli pita ve zahter|🫓|330|10|36|16|pita,labne,zahter,zeytinyağı,domates
+A|Fırın yumurtalı enginar|🥚|280|14|22|15|yumurta,enginar,parmesan,limon,maydanoz
+A|Kuru domatesli frittata|🍳|310|18|12|20|yumurta,kuru domates,fesleğen,parmesan,zeytin
+A|Ricotta ballı çilek kasesi|🥣|280|12|28|13|ricotta,bal,çilek,badem,nane
+A|Zeytinli mozzarellalı galeta|🥖|360|14|38|16|ekmek,mozzarella,zeytin,domates,fesleğen
+A|Narlı yoğurt parfe|🍨|240|9|32|8|yoğurt,nar,granola,bal,fıstık
+A|İncirli ceviz ezmeli tost|🥪|370|10|44|17|incir,ceviz,labne,ekmek,bal
+A|Fetalı domatesli kaygana|🍅|300|15|14|20|yumurta,domates,kekik,feta,zeytinyağı
+A|Şeftali mascarpone krep|🥞|390|9|48|18|krep,şeftali,mascarpone,bal,fıstık
+A|Somonlu kapari bagel|🥯|410|22|40|17|bagel,somon,krem peynir,kapari,dereotu
+U|Soya yumurtalı onigiri|🍙|260|9|42|5|pirinç,yumurta,nori,susam,soya sosu
+U|Zencefilli kabak lapası|🥣|220|4|40|5|kabak,pirinç,zencefil,susam,bal
+U|Tamagoyaki ve miso çorbası|🍳|280|17|14|16|yumurta,miso,tofu,yeşil soğan,mirin
+U|Matchalı hindistan cevizli chia|🥥|290|7|28|17|chia,matcha,hindistan cevizi sütü,mango,lime
+U|Mantarlı congee|🍲|250|9|42|5|pirinç,mantar,zencefil,yumurta,yeşil soğan
+U|Tofulu scramble wrap|🌯|320|18|34|13|tofu,tortilla,ıspanak,zerdeçal,soya sosu
+U|Kırmızı fasulyeli mochi|🍡|260|4|58|1|mochi,kırmızı fasulye,şeker,matcha,susam
+U|Susamlı avokado tost|🥑|340|8|32|20|ekmek,avokado,susam,turp,lime
+U|Somonlu pirinç lapası|🍚|390|24|44|12|pirinç,somon,nori,susam,yeşil soğan
+U|Pandanlı hindistan cevizi krepi|🥞|330|6|50|11|pandan,hindistan cevizi,un,yumurta,şeker
+N|Pastırmalı semizotlu yumurta|🥓|350|22|8|26|pastırma,yumurta,semizotu,tereyağı,pul biber
+N|Cevizli pekmezli yoğurt|🥣|280|10|32|13|yoğurt,ceviz,pekmez,tarçın,hurma
+N|Mantarlı çökelekli menemen|🍳|290|18|12|18|yumurta,mantar,çökelek,biber,domates
+N|Tahinli hurma tostu|🥪|370|9|50|15|ekmek,tahin,hurma,ceviz,tarçın
+N|Kayısılı kaymaklı pankek|🥞|420|9|52|20|un,kaymak,kayısı,yumurta,bal
+N|Peynirli kabaklı gözleme|🥬|340|13|40|14|yufka,kabak,beyaz peynir,nane,tereyağı
+N|Sucuklu mısır ekmeği tostu|🌽|430|20|36|22|mısır unu,sucuk,kaşar,yumurta,tereyağı
+N|Pekmezli yulaf kasesi|🥣|310|9|50|9|yulaf,pekmez,süt,fındık,tarçın
+N|Pastırmalı patates tava|🥔|380|17|30|21|patates,pastırma,yumurta,biber,tereyağı
+N|Nar ekşili lor ve ceviz|🍯|240|11|14|15|lor peyniri,ceviz,nar ekşisi,bal,kekik
+N|Antep fıstıklı simit tost|🥨|400|12|50|17|simit,antep fıstığı,krem peynir,bal,susam
+L|Chilaquiles verdes|🌮|420|18|44|20|tortilla,yeşil salsa,yumurta,peynir,kişniş
+L|Mango lime chia|🥭|240|6|34|9|chia,mango,lime,hindistan cevizi sütü,bal
+L|Fasulyeli breakfast burrito|🌯|450|22|50|18|tortilla,kuru fasulye,avokado,yumurta,peynir
+L|Tropikal açai kasesi|🫐|340|6|54|12|açai,muz,granola,hindistan cevizi,çilek
+L|Huevos motuleños|🍳|400|19|38|20|yumurta,tortilla,kuru fasulye,bezelye,domates
+L|Plantain yumurta tava|🍌|360|12|50|14|plantain,yumurta,peynir,kişniş,lime
+L|Tarçınlı churro waffle|🧇|410|7|60|16|un,yumurta,tarçın,dulce de leche,süt
+L|Ananaslı hindistan cevizli yoğurt|🍍|230|8|32|8|yoğurt,ananas,hindistan cevizi,lime,bal
+L|Chorizolu patates hash|🥔|420|19|36|22|patates,chorizo,yumurta,biber,kişniş
+L|Patatesli quesadilla|🧀|390|14|38|20|tortilla,patates,peynir,jalapeno,salsa
+L|Papaya lime kasesi|🍈|180|3|36|3|papaya,lime,yoğurt,chia,nane`,
+`A|Safranlı levrek ve rezene|🐟|450|38|18|24|levrek,rezene,safran,limon,patates
+A|Karidesli pesto risotto|🍤|540|28|62|18|pirinç,karides,fesleğen,parmesan,sarımsak
+U|Misolu somon ve bok choy|🍣|480|36|20|28|somon,miso,bok choy,zencefil,susam
+U|Hindistan cevizli kırmızı köri|🍛|560|34|30|34|tavuk,hindistan cevizi sütü,köri,pirinç,lime
+N|Erikli kuzu kavurma|🍲|580|40|28|32|kuzu,erik,soğan,tarçın,bulgur
+N|Narlı ördek göğsü|🦆|520|36|18|34|ördek,nar,pekmez,kereviz,tereyağı
+L|Chipotle soslu tavuk fajita|🌯|470|34|42|18|tavuk,biber,tortilla,chipotle,lime
+L|Mole soslu hindi|🍗|510|38|30|26|hindi,kakao,biber,susam,pirinç
+A|Kekikli kuzu pirzola ve nar|🍖|560|38|14|38|kuzu pirzola,nar ekşisi,kekik,patlıcan,sarımsak
+A|Limonlu tavuk zeytin tagine|🍗|470|40|16|26|tavuk,limon,yeşil zeytin,safran,soğan
+A|Ahtapotlu patates güveç|🐙|420|34|34|16|ahtapot,patates,domates,kapari,zeytinyağı
+A|Ricotta ıspanaklı cannelloni|🍝|520|24|50|24|makarna,ricotta,ıspanak,domates,parmesan
+A|Rezeneli levrek papillote|🐟|380|36|12|20|levrek,rezene,portakal,zeytin,zeytinyağı
+A|Mantarlı trüflü tagliatelle|🍄|560|18|70|22|tagliatelle,mantar,trüf,parmesan,krema
+A|Kuşkonmazlı karides risotto|🍤|510|26|64|16|pirinç,karides,kuşkonmaz,limon,parmesan
+A|Fırında fetalı bütün kabak|🎃|390|16|40|18|kabak,beyaz peynir,nohut,kekik,nar
+A|Safranlı deniz mahsullü paella|🥘|580|34|66|18|pirinç,midye,karides,safran,kalamar
+A|Fesleğenli dana medalyon|🥩|540|44|10|34|dana bonfile,fesleğen,domates,parmesan,sarımsak
+U|Misolu karamelize morina|🐟|420|34|20|22|morina,miso,mirin,zencefil,bok choy
+U|Teriyaki soslu ördek soba|🍜|560|32|56|22|ördek,soba,teriyaki,susam,yeşil soğan
+U|Yeşil köri karides|🍛|490|30|28|28|karides,yeşil köri,hindistan cevizi sütü,patlıcan,fesleğen
+U|Susamlı tofu brokoli wok|🥦|380|20|34|18|tofu,brokoli,susam,soya sosu,zencefil
+U|Tavuklu bibimbap|🍚|550|34|66|16|pirinç,tavuk,yumurta,havuç,kimchi
+U|Dana donburi|🍱|610|34|62|24|dana,pirinç,yumurta,soğan,mirin
+U|Karidesli laksa|🍲|520|28|48|24|erişte,karides,hindistan cevizi sütü,laksa,limon otu
+U|Mantar tofu pad thai|🍝|480|18|68|16|pirinç eriştesi,tofu,fıstık,lime,yumurta
+U|Kuzu hoisin bao|🥟|470|24|52|18|kuzu,bao hamuru,hoisin,salatalık,yeşil soğan
+U|Yuzu soslu levrek ve pirinç|🐟|430|34|40|14|levrek,yuzu,pirinç,turp,susam
+N|Pekmezli kuzu incik|🍖|640|44|26|38|kuzu incik,pekmez,soğan,kekik,havuç
+N|Fıstıklı tavuk beğendi|🍗|560|40|22|34|tavuk,patlıcan,antep fıstığı,süt,kaşar
+N|Narlı kuzu kebap|🥩|520|34|28|30|dana kıyma,nar ekşisi,bulgur,sumak,pul biber
+N|Sumaklı alabalık ve kuşkonmaz|🐟|390|36|10|22|alabalık,sumak,kuşkonmaz,limon,tereyağı
+N|Kayısılı dana tencere|🥘|540|40|36|24|dana,kayısı,soğan,tarçın,bulgur
+N|Çökelek soslu tavuklu mantı|🥟|520|30|50|20|mantı,tavuk,yoğurt,çökelek,tereyağı
+N|Erikli ördek konfit|🦆|600|38|22|40|ördek,erik,tarçın,pekmez,patates
+N|Kestaneli hindi sarma|🦃|510|40|28|26|hindi,kestane,mantar,kekik,tereyağı
+N|Nohutlu kuzu tandır|🍲|580|42|34|28|kuzu,nohut,soğan,tarçın,domates
+N|Antep fıstıklı levrek|🐟|480|36|18|28|levrek,antep fıstığı,limon,tereyağı,dereotu
+N|Karadutlu dana bonfile|🥩|530|42|20|30|dana bonfile,karadut,pekmez,kekik,patates
+L|Mole poblano tavuk|🍗|510|38|30|26|tavuk,kakao,biber,susam,pirinç
+L|Achiotlu kuzu barbacoa|🍖|580|40|20|36|kuzu,achiote,lime,tortilla,soğan
+L|Lime marine karidesli fajita|🍤|440|30|42|16|karides,biber,tortilla,lime,kişniş
+L|Chimichurri soslu bonfile|🥩|560|44|8|38|dana bonfile,maydanoz,sarımsak,kırmızı biber,sirke
+L|Moqueca balık güveci|🍲|470|36|22|26|beyaz balık,hindistan cevizi sütü,biber,domates,kişniş
+L|Feijoada tarzı fasulye sucuk|🫘|580|30|56|26|kuru fasulye,sucuk,pirinç,portakal,sarımsak
+L|Lomo saltado|🥘|550|36|50|22|dana,patates,soğan,domates,soya sosu
+L|Yeşil chile enchiladas|🌯|520|28|48|24|tortilla,tavuk,yeşil chile,peynir,kişniş
+L|Kinoalı poblano dolması|🌶️|440|18|52|18|poblano biber,kinoa,peynir,mısır,kimyon
+L|Ceviche tostadalı levrek|🐟|390|34|30|14|levrek,lime,avokado,mısır,tostada
+L|Papa rellena|🥔|540|28|50|26|patates,dana kıyma,zeytin,yumurta,kırmızı soğan`,
+`A|Sarımsaklı karides gambas|🦐|230|20|3|15|karides,sarımsak,pul biber,zeytinyağı,limon
+A|Trüflü arancini|🍄|310|9|36|14|pirinç,mozzarella,trüf,galeta,parmesan
+U|Peynirli mantar gyoza|🥟|280|11|34|11|hamur,peynir,mantar,soya sosu,yeşil soğan
+U|Teriyaki mantarlı şiş|🍢|190|6|20|9|mantar,teriyaki,susam,biber,zencefil
+N|Çökelekli kabak çiçeği dolması|🌼|210|8|22|10|kabak çiçeği,çökelek,pirinç,nane,tereyağı
+N|Sumaklı çıtır kalamar|🦑|260|18|22|11|kalamar,un,sumak,yoğurt,limon
+L|Chorizolu patates bravas|🥔|330|9|34|18|patates,chorizo,domates,sarımsak,paprika
+L|Jalapeno poppers|🌶️|270|11|16|18|jalapeno,krem peynir,kaşar,galeta,mısır
+A|Anchovili mozzarella carrozza|🧀|290|12|24|16|ekmek,mozzarella,yumurta,kapari,hamsi
+A|Pesto soslu midye|🦪|180|16|8|9|midye,fesleğen,parmesan,galeta,sarımsak
+A|Prosciuttolu kuşkonmaz tempura|🌿|210|9|16|12|kuşkonmaz,prosciutto,un,limon,parmesan
+A|Enginar kalbi gratin|🥬|220|8|14|15|enginar,parmesan,galeta,sarımsak,maydanoz
+A|Fırında fetalı kırmızı biber|🌶️|190|8|10|13|kırmızı biber,feta,kekik,zeytinyağı,nar
+A|Humuslu ahtapot ızgara|🐙|240|22|10|12|ahtapot,nohut,tahin,limon,paprika
+A|Kabaklı ricotta kroket|🎃|260|9|24|14|kabak,ricotta,galeta,parmesan,nane
+A|Ballı keçi peynirli bruschetta|🍯|230|9|24|11|ekmek,keçi peyniri,bal,ceviz,kekik
+A|Sarımsaklı kalamar fritto|🦑|270|18|20|13|kalamar,un,sarımsak,limon,maydanoz
+A|Cevizli patlıcan involtini|🍆|240|8|14|17|patlıcan,ricotta,ceviz,domates,fesleğen
+U|Çıtır karidesli tempura|🍤|260|14|24|12|karides,tempura unu,soya sosu,turp,limon
+U|Miso karamelli patlıcan|🍆|210|4|24|11|patlıcan,miso,mirin,susam,yeşil soğan
+U|Takoyaki ahtapot topları|🐙|240|11|28|9|ahtapot,un,yumurta,yeşil soğan,nori
+U|Sebzeli spring roll|🥢|190|5|26|7|pirinç kâğıdı,lahana,havuç,mantar,soya sosu
+U|Kore usulü çıtır tavuk|🍗|310|22|22|15|tavuk,gochujang,susam,sarımsak,bal
+U|Karides satay|🍢|240|20|10|14|karides,fıstık ezmesi,hindistan cevizi sütü,lime,zencefil
+U|Tofu katsu|🧈|230|12|20|11|tofu,galeta,yumurta,susam,soya sosu
+U|Mantarlı dim sum bun|🥟|220|8|32|6|buhar hamuru,mantar,soya sosu,zencefil,yeşil soğan
+U|Mısır tempuralı soğuk soba|🍜|260|8|40|7|soba,mısır,tempura unu,nori,soya sosu
+U|Yuzu soslu midye|🦪|160|14|8|7|midye,yuzu,sake,zencefil,yeşil soğan
+N|Pastırmalı mantı tava|🥟|280|13|24|15|mantı,pastırma,yoğurt,tereyağı,pul biber
+N|Çıtır sumaklı hellim|🧀|290|16|10|21|hellim,sumak,bal,nane,susam
+N|Fıstıklı kadayıf tavuk|🍗|340|22|24|16|tavuk,kadayıf,antep fıstığı,bal,sumak
+N|Cevizli ıspanak kroket|🥬|230|8|20|13|ıspanak,ceviz,peynir,galeta,nane
+N|Mantar sarmalı kuzu|🍄|270|19|8|18|kuzu eti,mantar,kekik,sarımsak,tereyağı
+N|Pestilli peynirli börek|🥐|310|9|30|17|yufka,beyaz peynir,pestil,ceviz,tereyağı
+N|Çökelekli enginar dolması|🌿|190|8|18|10|enginar,çökelek,dereotu,limon,zeytinyağı
+N|Pekmezli sucuk tava|🍢|290|14|14|20|sucuk,pekmez,nane,dereotu,tereyağı
+N|Kaşarlı karides güveç|🦐|300|20|8|21|karides,kaşar,mantar,biber,tereyağı
+N|Sarımsaklı lor kroket|🧆|240|10|20|13|lor peyniri,galeta,sarımsak,dereotu,yumurta
+N|Fındıklı ördek rulo|🦆|290|18|14|18|ördek,fındık,pekmez,yufka,kekik
+L|Elote kroket|🌽|270|7|28|15|mısır,peynir,galeta,lime,pul biber
+L|Karidesli ceviche tacos|🌮|240|14|26|9|karides,tortilla,lime,avokado,kişniş
+L|Empanada de carne|🥟|310|13|28|16|hamur,dana kıyma,soğan,zeytin,yumurta
+L|Peynirli arepas|🫓|290|11|34|12|mısır unu,peynir,avokado,tereyağı,fasulye
+L|Street corn dip|🌽|250|8|22|15|mısır,krem peynir,jalapeno,lime,kişniş
+L|Yucca kızartması chimichurri|🍟|280|3|40|12|yucca,maydanoz,sarımsak,sirke,kırmızı biber
+L|Pollo al ajillo|🍗|290|24|4|20|tavuk,sarımsak,şarap,pul biber,maydanoz
+L|Tamale de maiz|🌽|260|8|34|10|mısır unu,mısır,peynir,biber,kimyon
+L|Camarones al mojo|🦐|220|22|6|12|karides,sarımsak,lime,tereyağı,kişniş
+L|Gazpacho shot cheddar crisp|🍅|140|5|12|8|domates,salatalık,biber,cheddar,sarımsak
+L|Plantain tostones|🍌|240|2|40|9|plantain,sarımsak,lime,tuz,zeytinyağı`,
+`A|Zeytinyağlı limonlu kek|🍰|320|5|42|15|zeytinyağı,limon,un,yumurta,bal
+A|Mascarpone incir tart|🥧|390|6|44|22|incir,mascarpone,bisküvi,bal,kekik
+U|Matcha tiramisu|🍵|360|7|38|20|matcha,mascarpone,bisküvi,yumurta,krema
+U|Mango sticky rice|🥭|340|5|62|8|pirinç,mango,hindistan cevizi sütü,şeker,susam
+N|Pekmezli tahinli brownie|🍫|380|6|48|19|tahin,pekmez,çikolata,yumurta,ceviz
+N|Fıstıklı kaymaklı panna cotta|🍮|370|7|32|24|krema,fıstık,kaymak,şeker,jelatin
+L|Dulce de leche churros|🥨|410|5|56|18|un,süt,dulce de leche,tarçın,yumurta
+L|Mangolu lime cheesecake|🍰|350|7|38|19|krem peynir,lime,mango,bisküvi,krema
+A|Limonlu mascarpone semifreddo|🍨|380|6|36|24|mascarpone,limon,yumurta,şeker,bisküvi
+A|Zeytinyağlı çikolata tart|🍫|420|6|40|27|çikolata,zeytinyağı,badem,yumurta,deniz tuzu
+A|Fırın şeftali ve amaretti|🍑|290|4|44|11|şeftali,amaretti,badem,bal,tereyağı
+A|Ricotta limon cheesecake|🍰|340|10|32|20|ricotta,limon,yumurta,şeker,bisküvi
+A|Balsamikli çilek panna cotta|🍓|330|5|34|20|krema,çilek,balsamik,şeker,jelatin
+A|Bademli incir galette|🥧|370|7|46|18|incir,badem,un,tereyağı,bal
+A|Portakallı zeytinyağı keki|🍊|350|5|45|17|portakal,zeytinyağı,un,yumurta,badem
+A|Kayısılı mascarpone tiramisu|🍮|390|7|38|23|kayısı,mascarpone,bisküvi,yumurta,bal
+A|Kekikli bal dondurması|🍦|260|5|30|13|süt,krema,bal,kekik,yumurta
+A|Antep fıstıklı cannoli|🥐|360|8|38|20|ricotta,antep fıstığı,un,çikolata,şeker
+U|Matcha kek ve kırmızı fasulye|🍵|330|6|46|13|matcha,un,kırmızı fasulye,yumurta,şeker
+U|Yuzu cheesecake|🍋|350|7|34|21|yuzu,krem peynir,bisküvi,yumurta,krema
+U|Susamlı mochi dondurma|🍡|240|4|40|7|mochi,dondurma,susam,şeker,matcha
+U|Pandanlı hindistan cevizi jeli|🥥|170|2|30|5|hindistan cevizi sütü,pandan,agar,şeker,lime
+U|Karamelli taiyaki|🐟|320|6|52|10|un,kırmızı fasulye,süt,yumurta,şeker
+U|Mango pudding|🥭|230|4|38|7|mango,krema,jelatin,şeker,süt
+U|Hojicha panna cotta|🍮|300|5|28|19|hojicha,krema,süt,şeker,jelatin
+U|Kara susamlı çikolata truf|🍫|280|5|24|19|kara susam,çikolata,krema,kakao,bal
+U|Dorayaki ve tatlı fasulye|🥞|310|7|54|7|un,yumurta,kırmızı fasulye,bal,süt
+U|Zencefilli armut kompostosu|🍐|190|1|44|1|armut,zencefil,şeker,limon,tarçın
+N|Tahinli antep fıstığı sufle|🍫|360|8|34|22|tahin,antep fıstığı,çikolata,yumurta,şeker
+N|Ayva ve kaymaklı tart|🍎|380|5|50|18|ayva,kaymak,un,tereyağı,tarçın
+N|Pekmezli ceviz baklava rulo|🥮|400|7|46|22|yufka,ceviz,pekmez,tereyağı,tarçın
+N|Karadutlu yoğurt mousse|🫐|240|7|30|10|karadut,yoğurt,krema,şeker,jelatin
+N|Hurmalı fındık tatlısı|🌰|330|6|44|16|hurma,fındık,kakao,tahin,tarçın
+N|Gül sulu muhallebi|🌹|270|6|40|9|süt,pirinç unu,gül suyu,şeker,fıstık
+N|Kabak cheesecake|🎃|350|7|44|17|bal kabağı,krem peynir,ceviz,tahin,tarçın
+N|Safranlı sütlaç brülé|🍮|320|7|44|13|süt,pirinç,safran,şeker,vanilya
+N|Pekmezli irmik helvası|🍯|340|5|52|13|irmik,pekmez,tereyağı,fındık,süt
+N|Kayısılı lor tatlısı|🍑|280|9|36|11|lor peyniri,kayısı,ceviz,bal,tarçın
+N|Dut kurulu çikolata|🍫|310|4|38|17|kuru dut,çikolata,fındık,tahin,tuz
+L|Tres leches kek|🍰|420|9|52|19|un,süt,krema,yumurta,şeker
+L|Dulce de leche alfajores|🍪|380|5|50|18|un,dulce de leche,tereyağı,yumurta,hindistan cevizi
+L|Hindistan cevizli flan|🍮|290|6|38|12|yumurta,hindistan cevizi sütü,süt,karamel,vanilya
+L|Meksika usulü çikolatalı brownie|🍫|400|6|46|23|çikolata,tarçın,biber,yumurta,un
+L|Churro dondurma sandviç|🍦|430|6|56|20|churro,dondurma,tarçın,şeker,karamel
+L|Lime ve mangolu pavlova|🥭|300|4|58|7|yumurta akı,mango,lime,krema,şeker
+L|Papaya hindistan cevizi kreması|🥥|220|3|30|11|papaya,hindistan cevizi sütü,lime,şeker,chia
+L|Arroz con leche brülé|🍚|330|7|50|10|pirinç,süt,tarçın,şeker,limon kabuğu
+L|Platano maduro dulce|🍌|310|3|58|9|plantain,tarçın,şeker,tereyağı,krema
+L|Cajeta kremalı krep|🥞|370|7|52|15|krep,cajeta,keçi sütü,ceviz,tarçın
+L|Tamarindli ananas|🍍|190|1|46|1|ananas,tamarind,lime,şeker,pul biber`,
+`A|Biberiyeli limonata|🍋|90|0|23|0|limon,biberiye,bal,soda,nane
+A|Nar nane spritzer|🥤|85|0|21|0|nar suyu,nane,soda,limon,buz
+U|Yuzu lime tonik|🍹|70|0|18|0|yuzu,lime,tonik,zencefil,buz
+U|Soğuk matcha latte|🍵|120|4|14|5|matcha,süt,buz,bal,vanilya
+N|Ayvalı tarçınlı soğuk çay|🫖|60|0|15|0|ayva,tarçın,çay,elma,buz
+N|Karadutlu ıhlamur tonik|🫐|80|0|20|0|karadut,ihlamur,tonik,limon,buz
+L|Hibiskuslu agua fresca|🌺|75|0|19|0|hibiskus,lime,şeker,su,buz
+L|Mango lassi|🥭|180|6|30|4|mango,yoğurt,kardemom,süt,bal
+A|Greyfurt biberiye sodası|🍊|70|0|17|0|greyfurt,biberiye,soda,bal,buz
+A|Şeftali fesleğen buzlu çay|🍑|80|0|20|0|şeftali,fesleğen,çay,limon,buz
+A|Kavun nane agua|🍈|65|1|16|0|kavun,nane,lime,soda,buz
+A|Narenciye shrub|🍋|60|0|15|0|portakal,elma sirkesi,bal,soda,buz
+A|Çilek balsamik soda|🍓|75|0|18|0|çilek,balsamik,soda,nane,buz
+A|Badem sütlü ballı latte|☕|130|4|16|6|badem sütü,bal,kahve,tarçın,buz
+A|Limonlu kekikli buzlu çay|🍃|50|0|12|0|kekik,limon,çay,bal,buz
+A|İncir vanilya smoothie|🥤|190|5|36|3|incir,süt,vanilya,bal,buz
+A|Salatalıklı nane limonata|🥒|60|0|15|0|salatalık,nane,limon,bal,soda
+A|Nar portakal sıkma|🍹|110|1|26|0|nar,portakal,zencefil,limon,buz
+U|Hojicha latte|🍵|110|4|14|4|hojicha,süt,bal,buz,vanilya
+U|Lychee gül soda|🌹|90|0|22|0|lychee,gül suyu,soda,lime,buz
+U|Zencefilli kombucha spritz|🍏|50|0|12|0|kombucha,zencefil,lime,elma,buz
+U|Yuzu limonata|🍋|85|0|21|0|yuzu,limon,bal,soda,buz
+U|Hindistan cevizli matcha frappé|🥥|160|4|20|7|matcha,hindistan cevizi sütü,buz,bal,vanilya
+U|Karpuz limon otu serinletici|🍉|70|1|17|0|karpuz,limon otu,lime,soda,nane
+U|Mango pandan şerbeti|🥭|140|1|34|1|mango,pandan,hindistan cevizi sütü,lime,buz
+U|Kırmızı fasulyeli sütlü buz|🍧|190|4|36|4|kırmızı fasulye,süt,şeker,buz,matcha
+U|Yeşil çay şeftali soda|🍑|60|0|14|0|yeşil çay,şeftali,soda,nane,buz
+U|Susamlı soya sütü latte|🥛|150|7|14|7|soya sütü,kara susam,bal,vanilya,buz
+N|Gül bahçesi şerbeti|🌹|85|0|21|0|gül,şeker,limon,soda,buz
+N|Şalgam tonik|🥤|40|1|9|0|şalgam,tonik,limon,nane,buz
+N|Nar ekşili ayran gazozu|🍹|75|0|18|0|nar ekşisi,soda,nane,bal,buz
+N|Karadutlu kefir smoothie|🫐|170|7|26|4|karadut,kefir,bal,muz,buz
+N|Kayısılı kimyonlu ayran|🍑|110|5|16|3|ayran,kayısı,kimyon,nane,buz
+N|Safranlı sahlep latte|🥛|180|6|28|5|süt,sahlep,safran,tarçın,bal
+N|Elma tarçın soğuk çay|🍎|65|0|16|0|elma,tarçın,çay,karanfil,buz
+N|Ihlamur limonatası|🍋|70|0|17|0|ıhlamur,limon,bal,soda,buz
+N|Hurma tahin shake|🥤|260|7|40|9|hurma,tahin,süt,tarçın,buz
+N|Vişne nane serinletici|🍒|90|1|22|0|vişne,nane,soda,limon,buz
+N|Bergamot soğuk demleme|🫖|45|0|11|0|bergamot,çay,limon,bal,buz
+L|Horchata|🥛|190|2|38|4|pirinç,tarçın,süt,vanilya,şeker
+L|Tamarind agua fresca|🍹|110|0|28|0|tamarind,şeker,lime,su,buz
+L|Çarkıfelek mojito (alkolsüz)|🍈|95|1|23|0|çarkıfelek,nane,lime,soda,şeker
+L|Papaya lime smoothie|🥭|140|3|31|1|papaya,lime,yoğurt,bal,buz
+L|Ananas jalapeno limonata|🍍|85|0|21|0|ananas,jalapeno,lime,soda,buz
+L|Açai muz smoothie|🫐|210|4|42|4|açai,muz,süt,bal,buz
+L|Meksika usulü sıcak çikolata|🍫|230|6|30|10|kakao,tarçın,süt,biber,şeker
+L|Coco lime frappe|🥥|180|2|24|9|hindistan cevizi,lime,buz,şeker,süt
+L|Guanabana batido|🍈|150|4|30|2|guanabana,süt,bal,vanilya,buz
+L|Mısırlı atole|🌽|170|4|32|3|mısır unu,süt,tarçın,vanilya,şeker
+L|Sorrel serinletici|🌺|70|0|17|0|hibiskus,zencefil,karanfil,portakal,buz`,
+`A|Biberiyeli gin tonik|🍸|160|0|10|0|gin,tonik,biberiye,limon,buz
+A|Narenciyeli sangria|🍷|190|0|22|0|kırmızı şarap,portakal,elma,tarçın,soda
+U|Yuzu sake spritz|🍶|140|0|10|0|sake,yuzu,soda,zencefil,buz
+U|Matchalı vodka sour|🍵|170|1|12|3|vodka,matcha,limon,yumurta akı,şurup
+N|Rakılı ayva kokteyli|🥃|200|0|18|0|rakı,ayva,limon,tarçın,buz
+N|Karadutlu gin fizz|🍹|170|0|14|0|gin,karadut,limon,soda,buz
+L|Mango margarita|🍹|230|0|26|0|tekila,mango,lime,tuz,buz
+L|Hibiskuslu mezcal|🥃|180|0|12|0|mezcal,hibiskus,lime,agave,buz
+A|Limoncello spritz|🍋|180|0|18|0|limoncello,prosecco,soda,nane,buz
+A|Aperol incir kokteyli|🍊|170|0|18|0|aperol,incir,prosecco,portakal,buz
+A|Zeytinli dirty martini|🍸|190|0|1|0|gin,vermut,zeytin,zeytin suyu,buz
+A|Biberiyeli greyfurt gin fizz|🍊|165|0|13|0|gin,greyfurt,biberiye,soda,limon
+A|Şeftalili bellini|🍑|130|0|14|0|prosecco,şeftali,limon,buz,nane
+A|Negroni sbagliato|🍷|190|0|14|0|campari,vermut,prosecco,portakal,buz
+A|Narlı roze sangria|🍷|170|0|20|0|roze şarap,nar,şeftali,nane,soda
+A|Fesleğenli gin smash|🌿|160|0|11|0|gin,fesleğen,limon,şeker,buz
+A|Kekikli bal viski sour|🥃|190|1|12|3|viski,bal,limon,kekik,yumurta akı
+A|Kavunlu prosecco kokteyli|🍈|140|0|13|0|prosecco,kavun,nane,lime,buz
+U|Sake mojito|🍶|150|0|12|0|sake,nane,lime,soda,şeker
+U|Zencefilli umeshu tonik|🍑|150|0|16|0|umeshu,tonik,zencefil,lime,buz
+U|Lychee martini|🍸|180|0|14|0|vodka,lychee,lime,şurup,buz
+U|Matchalı viski highball|🥃|130|0|5|0|viski,matcha,soda,limon,buz
+U|Shochu limon sour|🍋|140|0|9|0|shochu,limon,soda,bal,buz
+U|Yuzu gin kokteyli|🍸|150|0|9|0|gin,yuzu,tonik,zencefil,buz
+U|Soju karpuz spritz|🍉|160|0|15|0|soju,karpuz,lime,soda,nane
+U|Kırmızı fasulyeli rom kokteyli|🍹|210|1|18|2|rom,kırmızı fasulye,süt,hindistan cevizi sütü,buz
+U|Susamlı espresso martini|☕|210|1|14|2|vodka,espresso,kahve likörü,kara susam,şurup
+U|Pandanlı hindistan cevizi rom|🥥|220|0|16|8|rom,pandan,hindistan cevizi sütü,lime,buz
+N|Erik ve rakı spritz|🍷|190|0|15|0|rakı,erik,soda,nane,limon
+N|Karadutlu biberiye gin|🍹|165|0|13|0|gin,karadut,biberiye,tonik,limon
+N|Nar ekşili viski sour|🥃|180|0|12|0|viski,nar ekşisi,limon,bal,yumurta akı
+N|Ayvalı şarap spritz|🍷|140|0|14|0|beyaz şarap,ayva,soda,tarçın,buz
+N|Boğazkere sangria|🍷|180|0|18|0|boğazkere,portakal,elma,tarçın,soda
+N|Kayısılı rakı kokteyli|🍑|200|0|17|0|rakı,kayısı,limon,soda,nane
+N|Narince tonik|🍾|140|0|9|0|narince,tonik,limon,nane,buz
+N|Hurmalı bourbon old fashioned|🥃|180|0|9|0|bourbon,hurma,tarçın,portakal,buz
+N|Vişneli gin mule|🍒|190|0|16|0|gin,vişne,zencefil birası,lime,nane
+N|Pekmezli viski highball|🥃|150|0|10|0|viski,pekmez,soda,limon,buz
+N|Tahinli kahve likörlü kokteyl|☕|230|2|18|8|vodka,kahve likörü,tahin,süt,buz
+L|Pisco sour|🍸|190|1|14|0|pisco,limon,şeker,yumurta akı,bitters
+L|Caipirinha|🍋|170|0|12|0|cachaça,lime,şeker,buz,nane
+L|Paloma|🍹|160|0|14|0|tekila,greyfurt,lime,soda,tuz
+L|Çarkıfelek margarita|🍹|210|0|23|0|tekila,çarkıfelek,lime,agave,tuz
+L|Hindistan cevizli mojito|🥥|200|0|16|3|rom,hindistan cevizi sütü,lime,nane,soda
+L|Michelada|🍺|140|1|12|0|bira,lime,domates suyu,acı sos,tuz
+L|Ananaslı mezcal sour|🍍|170|0|14|0|mezcal,ananas,lime,agave,tuz
+L|Cuba libre|🥤|190|0|18|0|rom,kola,lime,buz,nane
+L|Mango daiquiri|🥭|210|0|22|0|rom,mango,lime,şeker,buz
+L|Jalapeno salatalık margarita|🌶️|180|0|10|0|tekila,salatalık,jalapeno,lime,agave
+L|Tamarindli rom punch|🍹|220|0|24|0|rom,tamarind,lime,şeker,buz`];
+const R=[];D.forEach((s,c)=>s.split("\n").forEach(l=>{const a=l.split("|");R.push({c,p:a[0],n:a[1],e:a[2],v:a.slice(3,7).map(Number),g:a[7].split(","),i:R.length})}));
+let cat=-1,q="",mp="A",seed=0,pin={};const meal=[];
+const tr=s=>s.toLocaleLowerCase("tr");
+const CL="#dfeef2",CM="#f4ecdc";
+const CR=[[/hindistan cevizi|süt|yoğurt|krema|mascarpone|ricotta|labne|kaymak|peynir|burrata|mozzarella|pirinç|mochi|kefir|ayran|dondurma|tofu|çökelek|lor|badem|vanilya|sahlep|krem/,CM],
+[/kırmızı|domates|kapya|chipotle|pul biber|acı sos|campari|chorizo/,"#cf3a28"],
+[/nar|çilek|ahududu|karpuz|hibiskus|pancar|vişne|şarap|boğazkere|roze|sorrel/,"#b3213f"],
+[/karadut|dut|açai|patlıcan|incir|şalgam|erik/,"#5b2f66"],
+[/lime/,"#a4c43a"],[/avokado/,"#a8b95b"],[/zeytin/,"#4d5a2c"],
+[/matcha|pandan|yeşil|nane|fesleğen|maydanoz|dereotu|kişniş|ıspanak|roka|brokoli|kuşkonmaz|bok choy|edamame|salatalık|lahana|jalapeno|poblano|biber|marul|biberiye|kekik|rezene|semizotu|asma|nori|enoki|yaprak|hojicha/,"#5a9140"],
+[/portakal|mango|havuç|kabak|papaya|kayısı|şeftali|somon|karides|ahtapot|kalamar|aperol|greyfurt|kavun|köri|zerdeçal|jamon|prosciutto|balık|levrek|morina|alabalık|midye/,"#ee8a25"],
+[/ceviz|fındık|tahin|pekmez|kahve|espresso|çikolata|kakao|hurma|mole|tarçın|bourbon|viski|kola|dana|kuzu|kıyma|ördek|sucuk|pastırma|incik|pirzola|bonfile|kestane|karamel|dulce|cajeta|bisküvi|kuru fasulye|mantar|churro|hindi|tavuk/,"#8a5230"],
+[/ekmek|tortilla|galeta|simit|bulgur|nohut|hamur|yufka|^un$|kinoa|soba|erişte|makarna|tagliatelle|granola|yulaf|nachos|pita|bagel|irmik|tempura|susam|kadayıf|krep/,"#d8b57c"],
+[/limon|yuzu|ananas|mısır|^bal$|yumurta|safran|kaşar|cheddar|ayva|zeytinyağı|plantain|muz|elma|armut|limoncello|prosecco|tereyağı|şeker|agave/,"#efc23f"],
+[/^rom$/,"#d9a04a"],
+[/gin|vodka|tekila|sake|soju|shochu|soda|tonik|buz|^su$|lychee|pisco|cachaça|mezcal|rakı|vermut|bira/,CL]];
+const colr=x=>{for(const[re,c]of CR)if(re.test(x))return c;return`hsl(${[...x].reduce((a,c)=>a+c.charCodeAt(0),0)%360} 40% 55%)`};
+const rnd=i=>{let s=i*9301+49297;return()=>(s=(s*9301+49297)%233280)/233280};
+function art(r){
+const rn=rnd(r.i+3),K=r.g.map(colr),c=r.c,n=tr(r.n),W="rgba(255,255,255,";
+const bl=(x,y,w,col,rot=0)=>`<g transform="rotate(${rot} ${x} ${y})"><ellipse cx="${x}" cy="${y}" rx="${w}" ry="${w*.72}" fill="${col}"/><ellipse cx="${x-w*.2}" cy="${y-w*.28}" rx="${w*.5}" ry="${w*.2}" fill="${W}.3)"/></g>`;
+const lf=(x,y,rot)=>`<ellipse cx="${x}" cy="${y}" rx="5" ry="2" fill="#4f8a3a" transform="rotate(${rot} ${x} ${y})"/>`;
+let o=`<svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">`;
+if(c>4){
+ const ch=K.filter(x=>x!==CL),liq=ch[0]||CL,l2=ch[1]||liq,id="l"+r.i;
+ const mint=r.g.some(x=>/nane|fesleğen|biberiye|kekik|pandan/.test(x));
+ const cit=r.g.map(x=>/portakal|greyfurt/.test(x)?"#f2931e":/lime/.test(x)?"#9ac43a":/limon|yuzu/.test(x)?"#f4dd4a":0).find(Boolean);
+ const cp=/martini|sour|margarita|daiquiri|pisco|bellini/.test(n),rk=/old fashioned|rakı|sbagliato/.test(n);
+ let gx=128,gy=14;
+ o+=`<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${liq}"/><stop offset="1" stop-color="${l2}"/></linearGradient></defs><ellipse cx="100" cy="116" rx="46" ry="6" fill="rgba(0,0,0,.35)"/>`;
+ if(cp){gx=134;gy=26;o+=`<rect x="98" y="70" width="4" height="40" fill="${W}.45)"/><ellipse cx="100" cy="111" rx="24" ry="5" fill="${W}.4)"/><path d="M60 24 L140 24 Q140 68 100 72 Q60 68 60 24Z" fill="${W}.18)" stroke="${W}.6)"/><path d="M65 30 L135 30 Q134 62 100 67 Q66 62 65 30Z" fill="url(#${id})" opacity=".92"/>`}
+ else if(rk){gx=138;gy=52;o+=`<path d="M60 50 L140 50 L132 108 Q132 114 124 114 L76 114 Q68 114 68 108Z" fill="${W}.18)" stroke="${W}.6)"/><path d="M63 68 L137 68 L132 108 Q132 111 124 111 L76 111 Q68 111 68 108Z" fill="url(#${id})" opacity=".92"/><rect x="82" y="74" width="22" height="22" rx="4" fill="${W}.45)" transform="rotate(-8 93 85)"/><rect x="108" y="82" width="18" height="18" rx="4" fill="${W}.4)" transform="rotate(10 117 91)"/>`}
+ else{o+=`<line x1="110" y1="2" x2="104" y2="100" stroke="${mint?"#e8e0d0":"#ff6b6b"}" stroke-width="3" stroke-linecap="round"/><path d="M68 12 L132 12 L125 108 Q125 114 118 114 L82 114 Q75 114 75 108Z" fill="${W}.18)" stroke="${W}.6)"/><path d="M71 38 L129 38 L125 108 Q125 111 118 111 L82 111 Q75 111 75 108Z" fill="url(#${id})" opacity=".92"/>`+[0,1,2].map(j=>`<rect x="${80+rn()*22}" y="${44+j*20+rn()*6}" width="17" height="17" rx="4" fill="${W}.4)" transform="rotate(${rn()*40-20} 100 ${60+j*20})"/>`).join("")+`<path d="M78 30 L82 100" stroke="${W}.5)" stroke-width="3" stroke-linecap="round"/>`}
+ o+=cit?`<circle cx="${gx}" cy="${gy}" r="12" fill="${cit}"/><circle cx="${gx}" cy="${gy}" r="9" fill="${W}.35)"/><path d="M${gx-9} ${gy} H${gx+9} M${gx} ${gy-9} V${gy+9}" stroke="${W}.5)"/>`:mint?[0,1,2].map(j=>lf(gx-8+j*6,gy-2-j*3,-40+j*40)).join(""):`<circle cx="${gx}" cy="${gy}" r="6" fill="#a3203c"/><circle cx="${gx-2}" cy="${gy-2}" r="2" fill="${W}.5)"/>`;
+}else{
+ const bowl=c!=3&&/salata|poke|ceviche|ezme|humus|tartar|guac|çorba|kase|lapası|parfe|chia|puding|smoothie|granola|yoğurt|congee|bowl|kreması|jeli|mousse|flan|sütlaç|panna|muhallebi|tiramisu|pudding|helva|sufle/.test(n);
+ o+=`<ellipse cx="100" cy="108" rx="78" ry="10" fill="rgba(0,0,0,.35)"/>`;
+ if(c==3){
+  const fr=/kroket|tempura|kızart|çıtır|börek|arancini|fritto|tostones|poppers|katsu|gyoza|empanada|spring|takoyaki|tava/.test(n)?"#d49a3c":K[0];
+  o+=`<rect x="22" y="30" width="156" height="70" rx="14" fill="#a47b4b" stroke="rgba(0,0,0,.25)"/>`+[0,1,2].map(j=>`<line x1="30" y1="${46+j*20}" x2="170" y2="${46+j*20}" stroke="rgba(0,0,0,.1)" stroke-width="1.5"/>`).join("")+
+  [0,1,2,3].map(j=>{const x=44+j*28,y=56+(j%2)*18+rn()*4;return bl(x,y,12,fr,rn()*60)+`<circle cx="${x}" cy="${y-1}" r="3.5" fill="${K[1]}"/>`}).join("")+
+  `<circle cx="158" cy="52" r="13" fill="#f6f1e8"/><circle cx="158" cy="52" r="9" fill="${K[2]}"/>`+[0,1,2].map(j=>lf(60+j*28,48+rn()*40,rn()*180)).join("");
+ }else if(bowl){
+  o+=`<path d="M38 56 Q100 134 162 56Z" fill="#efe8da"/><ellipse cx="100" cy="56" rx="62" ry="22" fill="#fbf7ef"/><ellipse cx="100" cy="58" rx="54" ry="17" fill="${K[0]}"/>`+
+  [1,2,3,4].map(j=>{const a=j*1.6+rn();return bl(100+Math.cos(a)*30,58+Math.sin(a)*9,6+rn()*3,K[j],rn()*90)}).join("")+[0,1,2].map(j=>lf(86+j*14,54+rn()*8,rn()*180)).join("");
+ }else if(c==4){
+  o+=`<ellipse cx="100" cy="74" rx="76" ry="38" fill="#f6f1e8"/><ellipse cx="100" cy="76" rx="58" ry="28" fill="#e9e1d1"/><path d="M44 92 Q80 100 110 92 Q140 84 160 94" stroke="${K[3]}" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85"/><path d="M68 84 L132 84 L120 52 L80 52Z" fill="${K[0]}"/><path d="M71 76 L129 76 L127 70 L73 70Z" fill="${K[1]}"/><ellipse cx="100" cy="52" rx="20" ry="6" fill="${K[2]}"/>`+
+  [0,1,2].map(j=>`<circle cx="${90+j*10}" cy="${47+(j%2)*3}" r="5" fill="${K[4]}"/><circle cx="${88+j*10}" cy="${45+(j%2)*3}" r="1.6" fill="${W}.5)"/>`).join("")+lf(104,42,-30)+lf(110,40,20);
+ }else{
+  const s=c==2?1:.72,gr=/izgara|kuzu|dana|bonfile|pirzola|ördek|tavuk|kebap|fajita|somon|levrek|medalyon|hindi/.test(n);
+  o+=`<ellipse cx="100" cy="68" rx="80" ry="44" fill="#f6f1e8"/><ellipse cx="100" cy="70" rx="62" ry="32" fill="#e9e1d1"/><path d="M52 78 Q100 50 148 74" stroke="${K[2]}" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>`+
+  bl(92,66,24*s,K[0],-12)+(gr&&c==2?`<path d="M80 58 L100 74 M86 56 L106 72 M92 54 L112 70" stroke="rgba(0,0,0,.28)" stroke-width="2.5"/>`:"")+bl(130,72,14*s,K[1],10)+bl(126,62,8*s,K[3],0)+bl(64,76,10*s,K[2],20)+
+  [0,1,2,3,4].map(j=>`<circle cx="${70+rn()*60}" cy="${58+rn()*26}" r="2.4" fill="${K[4]}"/>`).join("")+[0,1,2,3].map(j=>lf(78+rn()*50,56+rn()*20,rn()*180)).join("");
+ }
+}
+return o+"</svg>"}
+const img=(r,cl)=>`<div class="${cl||"im"}" style="background:linear-gradient(135deg,hsl(${H[r.p]} 55% 40%),hsl(${H[r.p]+35} 60% 20%))">${art(r)}</div>`;
+let lang="en";try{lang=localStorage.getItem("mgl")||"en"}catch(e){}
+const T={en:{"h1": "Beyond the classics", "hp": "Beautifully paired menus, recipes you won't find everywhere", "tab0": "Discover", "tab1": "Pairing Menu", "tab2": "My Meal", "ph": "Search a dish or ingredient, e.g. shrimp, lime", "all": "All", "fav": "Favorites", "mh": "Gastronomically paired menu", "mp": "Recipes that share the same culinary character come together, so flavors never clash.", "shuf": "🔀 Another menu", "addm": "Add whole menu to my meal", "meal": "My Meal", "empty": "Nothing here yet. Add recipes from Discover or pick a ready-made menu.", "cal": "Calories", "prot": "Protein g", "carb": "Carbs g", "fat": "Fat g", "dist": "Calorie split: protein {p}% · carbs {c}% · fat {f}%", "ft": "Nutrition values are approximate per-serving estimates. Alcoholic drinks are for adults 18+ only.", "age": "🔞 Alcoholic drinks are for adults 18+ only. ", "dnote": "Diet filters are automatic guesses based on ingredient names; if you have allergies, always check the ingredients.", "none": "No matching recipes found.", "br": "Recipe", "bm": "Menu", "ml": "P|C|F", "per": "per serving", "ing": "Ingredients", "srv": "{n} servings, approx.", "guide": "Basic method guide", "gnote": "Amounts and steps are an automatic, generic guide based on the ingredients.", "addb": "+ Add to my meal", "pairb": "Pairing menu", "favb": "🤍 Favorite", "favd": "❤️ Favorited", "close": "Close", "veg": "Vegetarian", "vegan": "Vegan", "gf": "Gluten-free", "lf": "Lactose-free"},tr:{"h1": "Klasiklerin ötesinde bir mutfak", "hp": "Birbiriyle uyumlu menüler, sıra dışı tarifler", "tab0": "Keşfet", "tab1": "Uyumlu Menü", "tab2": "Öğünüm", "ph": "Yemek ya da malzeme ara, örn: karides, limon", "all": "Tümü", "fav": "Favorilerim", "mh": "Gastronomik uyumlu menü", "mp": "Aynı mutfak karakterini paylaşan tarifler bir araya gelir, böylece aromalar çatışmaz.", "shuf": "🔀 Başka menü", "addm": "Tüm menüyü öğünüme ekle", "meal": "Öğünüm", "empty": "Henüz bir şey eklemedin. Keşfet sekmesinden tarif ekleyebilir ya da hazır bir menü seçebilirsin.", "cal": "Kalori", "prot": "Protein g", "carb": "Karb. g", "fat": "Yağ g", "dist": "Kalori dağılımı: protein %{p} · karbonhidrat %{c} · yağ %{f}", "ft": "Besin değerleri porsiyon başı yaklaşık tahminlerdir. Alkollü içecekler yalnızca 18 yaş üzeri içindir.", "age": "🔞 Alkollü içecekler 18 yaş üzeri içindir. ", "dnote": "Diyet filtreleri malzeme adlarına göre otomatik tahmindir; alerjin varsa içerikleri mutlaka kontrol et.", "none": "Eşleşen tarif bulunamadı.", "br": "Tarif", "bm": "Menü", "ml": "P|K|Y", "per": "1 porsiyon", "ing": "Malzemeler", "srv": "{n} kişilik, yaklaşık", "guide": "Temel yapılış rehberi", "gnote": "Miktarlar ve adımlar malzemelere göre otomatik hazırlanmış genel bir rehberdir.", "addb": "+ Öğünüme ekle", "pairb": "Uyumlu menü", "favb": "🤍 Favori", "favd": "❤️ Favoride", "close": "Kapat", "veg": "Vejetaryen", "vegan": "Vegan", "gf": "Glütensiz", "lf": "Laktozsuz"}};
+const t=(k,o)=>{let x=T[lang][k]??T.en[k];if(o)for(const y in o)x=x.replace("{"+y+"}",o[y]);return x};
+const CE=["Starters","Breakfast","Mains","Hot appetizers","Desserts","Non-alcoholic drinks","Cocktails & spirits"],PE={A:"Mediterranean",U:"Far East",N:"Modern Anatolian",L:"Latin"};
+const NE=["Baked Fig Labneh", "Pomegranate Beet Carpaccio", "Cold Soba Salad", "Mango Avocado Tartare", "Sumac Butternut Hummus", "Walnut Muhammara Yogurt", "Pineapple Ceviche", "Corn Guacamole Tostada", "Burrata & Melon Carpaccio", "Sun-Dried Tomato Fava", "Artichoke Tuna Crudo", "Peach Prosciutto Roll", "Roasted Asparagus with Pomegranate", "Orange Fennel Salad", "Octopus Potato Carpaccio", "Mozzarella Tomato Tartare", "Honeyed Dried Figs with Goat Cheese", "Celeriac Carpaccio with Pomegranate Yogurt", "Sesame Edamame Spread", "Wasabi Tuna Poke", "Shrimp Rice Paper Rolls", "Kimchi Cucumber", "Ginger Pumpkin Soup Shot", "Tofu Vegetable Salad", "Miso Eggplant Tartare", "Yuzu Sea Bass Sashimi", "Mango Shrimp Rolls", "Soy-Glazed Enoki Wraps", "Pomegranate Molasses Raw Kofte Tartare", "Charred Eggplant with Pistachio Yogurt", "Quince Celeriac Salad", "Pastirma Melon", "Dill Curd Cheese Balls", "Purslane with Walnut Molasses Spread", "Tahini Radish Pomegranate Salad", "Dried Apricots in Turnip Juice Dressing", "Mushroom Hazelnut Stuffed Vine Leaves", "Charred Kapya Pepper with Yogurt", "Apricot Lamb Pastirma Wraps", "Raspberry Mango Ceviche", "Elote Street Corn", "Poblano Quinoa Salad", "Nachos & Fresh Guacamole", "Cocoa Bean Spread", "Mini Fish Tacos", "Jicama Orange Salad", "Chipotle Chicken Tostada", "Jamón Potato Croquetas", "Pineapple Pico de Gallo", "Habanero Mango Guac", "Shakshuka Egg Bruschetta", "Ricotta Fig Honey Toast", "Matcha Oat Bowl", "Miso Egg Rice Bowl", "Tahini Molasses Granola", "Spinach Curd Cheese Gözleme", "Huevos Rancheros Bowl", "Mango Chia Pudding", "Labneh Pita with Za'atar", "Baked Eggs with Artichoke", "Sun-Dried Tomato Frittata", "Ricotta Honey Strawberry Bowl", "Olive Mozzarella Crostini", "Pomegranate Yogurt Parfait", "Fig Walnut Spread Toast", "Feta Tomato Scramble", "Peach Mascarpone Crêpes", "Salmon Caper Bagel", "Soy Egg Onigiri", "Ginger Pumpkin Porridge", "Tamagoyaki & Miso Soup", "Matcha Coconut Chia", "Mushroom Congee", "Tofu Scramble Wrap", "Red Bean Mochi", "Sesame Avocado Toast", "Salmon Rice Porridge", "Pandan Coconut Crêpes", "Pastirma Purslane Eggs", "Walnut Molasses Yogurt", "Mushroom Curd Cheese Menemen", "Tahini Date Toast", "Apricot Clotted Cream Pancakes", "Cheese Zucchini Gözleme", "Sujuk Cornbread Toast", "Molasses Oat Bowl", "Pastirma Potato Skillet", "Pomegranate Molasses Curd & Walnut", "Pistachio Simit Toast", "Chilaquiles Verdes", "Mango Lime Chia", "Bean Breakfast Burrito", "Tropical Açaí Bowl", "Huevos Motuleños", "Plantain Egg Skillet", "Cinnamon Churro Waffle", "Pineapple Coconut Yogurt", "Chorizo Potato Hash", "Potato Quesadilla", "Papaya Lime Bowl", "Saffron Sea Bass with Fennel", "Shrimp Pesto Risotto", "Miso Salmon & Bok Choy", "Coconut Red Curry", "Lamb Kavurma with Plums", "Pomegranate Duck Breast", "Chipotle Chicken Fajitas", "Turkey in Mole", "Thyme Lamb Chops with Pomegranate", "Lemon Chicken & Olive Tagine", "Octopus Potato Stew", "Ricotta Spinach Cannelloni", "Fennel Sea Bass en Papillote", "Truffle Mushroom Tagliatelle", "Asparagus Shrimp Risotto", "Whole Roasted Squash with Feta", "Saffron Seafood Paella", "Basil Beef Medallions", "Miso-Glazed Cod", "Teriyaki Duck Soba", "Green Curry Shrimp", "Sesame Tofu Broccoli Stir-Fry", "Chicken Bibimbap", "Beef Donburi", "Shrimp Laksa", "Mushroom Tofu Pad Thai", "Lamb Hoisin Bao", "Yuzu Sea Bass with Rice", "Molasses-Glazed Lamb Shank", "Pistachio Chicken Beğendi", "Pomegranate Lamb Kebab", "Sumac Trout & Asparagus", "Apricot Beef Pot", "Chicken Manti with Curd Sauce", "Duck Confit with Plums", "Chestnut Turkey Roulade", "Chickpea Lamb Tandır", "Pistachio-Crusted Sea Bass", "Mulberry Beef Tenderloin", "Chicken Mole Poblano", "Achiote Lamb Barbacoa", "Lime-Marinated Shrimp Fajitas", "Chimichurri Steak", "Moqueca Fish Stew", "Feijoada-Style Beans & Sujuk", "Lomo Saltado", "Green Chile Enchiladas", "Quinoa-Stuffed Poblano", "Sea Bass Ceviche Tostada", "Papa Rellena", "Garlic Shrimp Gambas", "Truffle Arancini", "Cheese Mushroom Gyoza", "Teriyaki Mushroom Skewers", "Curd-Stuffed Zucchini Blossoms", "Sumac Crispy Calamari", "Chorizo Patatas Bravas", "Jalapeño Poppers", "Anchovy Mozzarella in Carrozza", "Pesto Mussels", "Prosciutto Asparagus Tempura", "Artichoke Heart Gratin", "Baked Feta Red Peppers", "Grilled Octopus with Hummus", "Zucchini Ricotta Croquettes", "Honey Goat Cheese Bruschetta", "Garlic Calamari Fritto", "Walnut Eggplant Involtini", "Crispy Shrimp Tempura", "Miso Caramel Eggplant", "Takoyaki Octopus Balls", "Vegetable Spring Rolls", "Korean Crispy Chicken", "Shrimp Satay", "Tofu Katsu", "Mushroom Dim Sum Buns", "Corn Tempura Cold Soba", "Yuzu Mussels", "Pastirma Manti Skillet", "Crispy Sumac Halloumi", "Pistachio Kadayıf Chicken", "Walnut Spinach Croquettes", "Mushroom-Wrapped Lamb", "Fruit Leather Cheese Börek", "Curd-Stuffed Artichokes", "Molasses Sujuk Skillet", "Cheesy Shrimp Casserole", "Garlic Curd Cheese Croquettes", "Hazelnut Duck Rolls", "Elote Croquettes", "Shrimp Ceviche Tacos", "Beef Empanadas", "Cheese Arepas", "Street Corn Dip", "Fried Yuca with Chimichurri", "Pollo al Ajillo", "Corn Tamales", "Camarones al Mojo", "Gazpacho Shot & Cheddar Crisp", "Plantain Tostones", "Olive Oil Lemon Cake", "Mascarpone Fig Tart", "Matcha Tiramisu", "Mango Sticky Rice", "Molasses Tahini Brownie", "Pistachio Kaymak Panna Cotta", "Dulce de Leche Churros", "Mango Lime Cheesecake", "Lemon Mascarpone Semifreddo", "Olive Oil Chocolate Tart", "Baked Peaches & Amaretti", "Ricotta Lemon Cheesecake", "Balsamic Strawberry Panna Cotta", "Almond Fig Galette", "Orange Olive Oil Cake", "Apricot Mascarpone Tiramisu", "Thyme Honey Ice Cream", "Pistachio Cannoli", "Matcha Cake with Red Bean", "Yuzu Cheesecake", "Sesame Mochi Ice Cream", "Pandan Coconut Jelly", "Caramel Taiyaki", "Mango Pudding", "Hojicha Panna Cotta", "Black Sesame Chocolate Truffles", "Dorayaki with Sweet Bean", "Ginger Pear Compote", "Tahini Pistachio Soufflé", "Quince & Kaymak Tart", "Walnut Molasses Baklava Roll", "Mulberry Yogurt Mousse", "Date Hazelnut Sweet", "Rosewater Muhallebi", "Pumpkin Cheesecake", "Saffron Rice Pudding Brûlée", "Molasses Semolina Halva", "Apricot Curd Cheese Dessert", "Dried Mulberry Chocolate", "Tres Leches Cake", "Dulce de Leche Alfajores", "Coconut Flan", "Mexican Chocolate Brownie", "Churro Ice Cream Sandwich", "Lime Mango Pavlova", "Papaya Coconut Cream", "Arroz con Leche Brûlée", "Sweet Platano Maduro", "Cajeta Cream Crêpes", "Tamarind Pineapple", "Rosemary Lemonade", "Pomegranate Mint Spritzer", "Yuzu Lime Tonic", "Iced Matcha Latte", "Quince Cinnamon Iced Tea", "Mulberry Linden Tonic", "Hibiscus Agua Fresca", "Mango Lassi", "Grapefruit Rosemary Soda", "Peach Basil Iced Tea", "Melon Mint Agua", "Citrus Shrub", "Strawberry Balsamic Soda", "Almond Honey Latte", "Lemon Thyme Iced Tea", "Fig Vanilla Smoothie", "Cucumber Mint Lemonade", "Pomegranate Orange Squeeze", "Hojicha Latte", "Lychee Rose Soda", "Ginger Kombucha Spritz", "Yuzu Lemonade", "Coconut Matcha Frappé", "Watermelon Lemongrass Cooler", "Mango Pandan Sherbet", "Red Bean Milk Shaved Ice", "Green Tea Peach Soda", "Sesame Soy Latte", "Rose Garden Sherbet", "Turnip Juice Tonic", "Pomegranate Ayran Fizz", "Mulberry Kefir Smoothie", "Apricot Cumin Ayran", "Saffron Salep Latte", "Apple Cinnamon Iced Tea", "Linden Lemonade", "Date Tahini Shake", "Sour Cherry Mint Cooler", "Bergamot Cold Brew", "Horchata", "Tamarind Agua Fresca", "Passion Fruit Mojito (Virgin)", "Papaya Lime Smoothie", "Pineapple Jalapeño Lemonade", "Açaí Banana Smoothie", "Mexican Hot Chocolate", "Coco Lime Frappé", "Soursop Batido", "Corn Atole", "Sorrel Cooler", "Rosemary Gin & Tonic", "Citrus Sangria", "Yuzu Sake Spritz", "Matcha Vodka Sour", "Raki Quince Cocktail", "Mulberry Gin Fizz", "Mango Margarita", "Hibiscus Mezcal", "Limoncello Spritz", "Aperol Fig Cocktail", "Dirty Martini with Olives", "Rosemary Grapefruit Gin Fizz", "Peach Bellini", "Negroni Sbagliato", "Pomegranate Rosé Sangria", "Basil Gin Smash", "Thyme Honey Whiskey Sour", "Melon Prosecco Cocktail", "Sake Mojito", "Ginger Umeshu Tonic", "Lychee Martini", "Matcha Whisky Highball", "Shochu Lemon Sour", "Yuzu Gin Cocktail", "Soju Watermelon Spritz", "Red Bean Rum Cocktail", "Sesame Espresso Martini", "Pandan Coconut Rum", "Plum & Raki Spritz", "Mulberry Rosemary Gin", "Pomegranate Molasses Whiskey Sour", "Quince Wine Spritz", "Boğazkere Sangria", "Apricot Raki Cocktail", "Narince & Tonic", "Date Bourbon Old Fashioned", "Sour Cherry Gin Mule", "Molasses Whisky Highball", "Tahini Coffee Liqueur Cocktail", "Pisco Sour", "Caipirinha", "Paloma", "Passion Fruit Margarita", "Coconut Mojito", "Michelada", "Pineapple Mezcal Sour", "Cuba Libre", "Mango Daiquiri", "Jalapeño Cucumber Margarita", "Tamarind Rum Punch"];
+const ID=Object.fromEntries("acı sos=hot sauce|ahtapot=octopus|ahududu=raspberry|alabalık=trout|ananas=pineapple|antep fıstığı=pistachio|armut=pear|asma yaprağı=vine leaves|ayva=quince|açai=açaí|badem=almond|badem sütü=almond milk|bakla=fava beans|bal=honey|bal kabağı=butternut squash|balsamik=balsamic vinegar|bao hamuru=bao dough|beyaz balık=white fish|beyaz peynir=white cheese|beyaz şarap=white wine|bezelye=peas|biber=pepper|biberiye=rosemary|bira=beer|bisküvi=biscuits|boğazkere=Boğazkere wine|brokoli=broccoli|buhar hamuru=steamed bun dough|buz=ice|ceviz=walnut|dana=beef|dana bonfile=beef tenderloin|dana kıyma=ground beef|deniz tuzu=sea salt|dereotu=dill|domates=tomato|domates salçası=tomato paste|domates suyu=tomato juice|dondurma=ice cream|ekmek=bread|elma=apple|elma sirkesi=apple cider vinegar|enginar=artichoke|erik=plum|erişte=noodles|fasulye=beans|fesleğen=basil|fındık=hazelnut|fıstık=pistachio|fıstık ezmesi=peanut butter|galeta=breadcrumbs|greyfurt=grapefruit|guanabana=soursop|gül=rose|gül suyu=rose water|hamsi=anchovies|hamur=dough|havuç=carrot|hellim=halloumi|hibiskus=hibiscus|hindi=turkey|hindistan cevizi=coconut|hindistan cevizi sütü=coconut milk|hurma=dates|ihlamur=linden|ıhlamur=linden|incir=fig|irmik=semolina|jalapeno=jalapeño|jamon=jamón|jelatin=gelatin|kabak=squash|kabak çiçeği=zucchini blossoms|kadayıf=kataifi pastry|kahve=coffee|kahve likörü=coffee liqueur|kakao=cocoa|kalamar=calamari|kapari=capers|kapya biber=kapya pepper|kara susam=black sesame|karadut=mulberry|karamel=caramel|karanfil=cloves|kardemom=cardamom|karides=shrimp|karpuz=watermelon|kavun=melon|kaymak=clotted cream|kayısı=apricot|kaşar=kashar cheese|kekik=thyme|kereviz=celeriac|kestane=chestnut|keçi peyniri=goat cheese|keçi sütü=goat milk|kimyon=cumin|kinoa=quinoa|kişniş=cilantro|kola=cola|krem peynir=cream cheese|krema=cream|krep=crêpe|kuru domates=sun-dried tomato|kuru dut=dried mulberry|kuru fasulye=dried beans|kuru incir=dried fig|kuru kayısı=dried apricot|kuzu=lamb|kuzu eti=lamb|kuzu incik=lamb shank|kuzu pirzola=lamb chops|kuşkonmaz=asparagus|köri=curry|kırmızı biber=red pepper|kırmızı fasulye=red beans|kırmızı soğan=red onion|kırmızı şarap=red wine|labne=labneh|lahana=cabbage|levrek=sea bass|limon=lemon|limon kabuğu=lemon zest|limon otu=lemongrass|lor peyniri=curd cheese|makarna=pasta|mantar=mushroom|mantı=manti|maydanoz=parsley|mayonez=mayonnaise|midye=mussels|morina=cod|muz=banana|mısır=corn|mısır unu=cornmeal|nane=mint|nar=pomegranate|nar ekşisi=pomegranate molasses|nar suyu=pomegranate juice|narince=Narince wine|nohut=chickpeas|pancar=beet|pastırma=pastirma|patates=potato|patlıcan=eggplant|pekmez=molasses|pestil=fruit leather|peynir=cheese|pirinç=rice|pirinç eriştesi=rice noodles|pirinç kâğıdı=rice paper|pirinç sirkesi=rice vinegar|pirinç unu=rice flour|poblano biber=poblano pepper|portakal=orange|pul biber=chili flakes|rakı=raki|rezene=fennel|roka=arugula|rom=rum|roze şarap=rosé wine|safran=saffron|sahlep=salep|salatalık=cucumber|sarımsak=garlic|semizotu=purslane|sirke=vinegar|siyah zeytin=black olives|soya sosu=soy sauce|soya sütü=soy milk|soğan=onion|su=water|sucuk=sujuk|sumak=sumac|susam=sesame|süt=milk|tahin=tahini|tarçın=cinnamon|tavuk=chicken|tekila=tequila|tempura unu=tempura flour|tereyağı=butter|ton balığı=tuna|tonik=tonic|trüf=truffle|turp=radish|tuz=salt|un=flour|vanilya=vanilla|vermut=vermouth|viski=whiskey|vişne=sour cherry|yer fıstığı=peanuts|yeşil chile=green chile|yeşil köri=green curry|yeşil salsa=green salsa|yeşil soğan=scallion|yeşil zeytin=green olives|yeşil çay=green tea|yoğurt=yogurt|yucca=yuca|yufka=phyllo|yulaf=oats|yumurta=eggs|yumurta akı=egg white|zahter=za'atar|zencefil=ginger|zencefil birası=ginger beer|zerdeçal=turmeric|zeytin=olives|zeytin suyu=olive brine|zeytinyağı=olive oil|çarkıfelek=passion fruit|çay=tea|çikolata=chocolate|çilek=strawberry|çökelek=curd cheese|ördek=duck|ıspanak=spinach|şalgam=turnip juice|şarap=wine|şeftali=peach|şeker=sugar|şurup=syrup|avokado=avocado|somon=salmon".split("|").map(x=>x.split("=")));
+const cn=c=>lang=="en"?CE[c]:C[c],pn=p=>lang=="en"?PE[p]:P[p],nm=r=>lang=="en"?NE[r.i]:r.n,ig=x=>lang=="en"&&ID[x]||x;
+const mt=(s,w)=>tr(s).includes(tr(w))||s.toLowerCase().includes(w.toLowerCase());
+const DID={Vejetaryen:"veg",Vegan:"vegan",Glütensiz:"gf",Laktozsuz:"lf"};
+let favOnly=false,dsel=new Set(),fav=new Set(),ds=1;
+try{fav=new Set(JSON.parse(localStorage.getItem("mgf")||"[]"))}catch(e){}
+function setL(l){lang=l;try{localStorage.setItem("mgl",l)}catch(e){}ui()}
+function ui(){document.documentElement.lang=lang;$("h1").textContent=t("h1");$("hp").textContent=t("hp");
+ [0,1,2].forEach(i=>$("t"+i).textContent=t("tab"+i));$("q").placeholder=t("ph");$("mh").textContent=t("mh");$("mpp").textContent=t("mp");$("meh").textContent=t("meal");$("ft").textContent=t("ft");
+ $("lEN").classList.toggle("on",lang=="en");$("lTR").classList.toggle("on",lang=="tr");cats();list();menu();drawMeal()}
+function tab(n){[0,1,2].forEach(i=>{$("p"+i).classList.toggle("hide",i!=n);$("t"+i).classList.toggle("on",i==n)});if(n==1)menu();if(n==2)drawMeal()}
+function tf(i){fav.has(i)?fav.delete(i):fav.add(i);try{localStorage.setItem("mgf",JSON.stringify([...fav]))}catch(e){}cats();list();if(!$("m").classList.contains("hide"))od(i)}
+function cats(){$("cats").innerHTML=[t("all"),...C.map((_,i)=>cn(i))].map((n,i)=>`<button class="${!favOnly&&cat==i-1?"on":""}" onclick="favOnly=false;cat=${i-1};cats();list()">${n}</button>`).join("")+`<button class="${favOnly?"on":""}" onclick="favOnly=!favOnly;cats();list()">❤️ ${t("fav")} (${fav.size})</button>`;
+ $("diet").innerHTML=Object.keys(DK).map(d=>`<button class="${dsel.has(d)?"on":""}" onclick="dsel.has('${d}')?dsel.delete('${d}'):dsel.add('${d}');cats();list()">${t(DID[d])}</button>`).join("")}
+function list(){
+ let L=R.filter(r=>(favOnly||cat<0||r.c==cat)&&(!favOnly||fav.has(r.i))&&[...dsel].every(d=>DK[d](r)));
+ const k=q.split(",").map(x=>x.trim()).filter(Boolean),m=t("ml").split("|");
+ if(k.length)L=L.map(r=>({r,s:k.filter(w=>r.g.some(x=>mt(x,w)||mt(ig(x),w))||mt(r.n,w)||mt(NE[r.i],w)).length})).filter(x=>x.s).sort((a,b)=>b.s-a.s).map(x=>x.r);
+ $("age").textContent=(cat>=5||cat<0?t("age"):"")+(dsel.size?t("dnote"):"");
+ $("grid").innerHTML=L.length?L.map(r=>`<div class="c"><button class="fv" onclick="tf(${r.i})">${fav.has(r.i)?"❤️":"🤍"}</button>${img(r)}<div class="bd"><span class="tag">${cn(r.c)} · ${pn(r.p)}</span><span class="sr">${nm(r)}</span><span class="mu">${r.g.map(ig).join(", ")}</span><span class="mu"><b>${r.v[0]} kcal</b> · ${m[0]} ${r.v[1]} · ${m[1]} ${r.v[2]} · ${m[2]} ${r.v[3]}</span><div class="ac"><button onclick="od(${r.i})">${t("br")}</button><button onclick="pair(${r.i})">${t("bm")}</button><button onclick="add(${r.i})">+</button></div></div></div>`).join(""):`<p class="mu">${t("none")}</p>`}
+function add(i){meal.push(R[i])}
+function pair(i){mp=R[i].p;pin={};pin[R[i].c]=i;tab(1)}
+function prof(){$("prof").innerHTML=Object.keys(P).map(k=>`<button class="${mp==k?"on":""}" onclick="mp='${k}';pin={};menu()">${pn(k)}</button>`).join("")+`<button class="pill" onclick="seed++;pin={};menu()">${t("shuf")}</button>`}
+function pick(){return [0,3,2,4,5,6,1].map(c=>{const pl=R.filter(r=>r.c==c&&r.p==mp);return pin[c]!==undefined&&R[pin[c]].p==mp?R[pin[c]]:pl[seed%pl.length]})}
+function menu(){prof();$("menu").innerHTML=pick().map(r=>`<div class="row">${img(r)}<div><span class="tag">${cn(r.c)}</span><br><span class="sr">${nm(r)}</span><br><span class="mu">${r.v[0]} kcal · ${r.g.slice(0,3).map(ig).join(", ")}</span></div></div>`).join("")+`<button class="go" onclick="pick().forEach(r=>meal.push(r));tab(2)">${t("addm")}</button>`}
+function drawMeal(){const x=[0,0,0,0];meal.forEach(r=>r.v.forEach((v,j)=>x[j]+=v));
+ const e=[x[1]*4,x[2]*4,x[3]*9],s=e[0]+e[1]+e[2]||1,cl=["#3b82f6","#d4a85a","#e2582b"];
+ $("meal").innerHTML=meal.length?`<div class="tot">${[["cal",x[0]],["prot",x[1]],["carb",x[2]],["fat",x[3]]].map(a=>`<div><b>${Math.round(a[1])}</b><span class="mu">${t(a[0])}</span></div>`).join("")}</div><div class="bar">${e.map((v,j)=>`<div style="width:${v/s*100}%;background:${cl[j]}"></div>`).join("")}</div><p class="mu">${t("dist",{p:Math.round(e[0]/s*100),c:Math.round(e[1]/s*100),f:Math.round(e[2]/s*100)})}</p>`+meal.map((r,i)=>`<div class="row">${img(r)}<div><span class="sr">${nm(r)}</span><br><span class="mu">${cn(r.c)} · ${r.v[0]} kcal</span></div><button class="x" onclick="meal.splice(${i},1);drawMeal()">✕</button></div>`).join(""):`<p class="mu">${t("empty")}</p>`}
+const MS=["tavuk","dana","kuzu","ördek","hindi","balık","levrek","somon","karides","midye","ahtapot","kalamar","morina","alabalık","pastırma","sucuk","prosciutto","jamon","chorizo","hamsi","kıyma","incik","pirzola"];
+const LS=["yoğurt","peynir","labne","ricotta","mascarpone","mozzarella","parmesan","burrata","feta","kaşar","hellim","krema","kaymak","tereyağı","çökelek","kefir","ayran","dulce","cajeta","mayonez","cheddar","dondurma","keçi sütü"],LE=["süt","lor"];
+const GS=["ekmek","makarna","bulgur","yufka","tortilla","soba","erişte","bisküvi","galeta","hamur","pita","bagel","simit","mantı","kadayıf","tagliatelle","irmik","amaretti","tempura","krep","granola","yulaf","soya sosu","teriyaki","hoisin","bira","churro","cannoli"],GE=["un"];
+const hs=(r,s,e)=>r.g.some(x=>e.includes(x)||s.some(w=>x.includes(w)));
+const DK={Vejetaryen:r=>!hs(r,[...MS,"jelatin"],[]),Vegan:r=>!hs(r,[...MS,"jelatin",...LS,"yumurta"],[...LE,"bal"]),Glütensiz:r=>!hs(r,GS,GE),Laktozsuz:r=>!hs(r,LS,LE)};
+const AM=[[70,40,30,15,10],[80,50,30,15,10],[160,80,50,20,10],[60,40,30,15,10],[70,50,35,20,10]];
+function stpT(r){const [a,b,c,d,e]=r.g;return [
+[`${a}, ${b} ve ${c} yıkanıp küçük parçalara ayrılır.`,`${d} ile tatlandırılır, tuz ve limonla dengelenir.`,`10 dakika dinlendirilir; ${e} ile süslenip servis edilir.`],
+[`${a} ve ${b} hazırlanır.`,`${c} ile birlikte tavada ya da kasede pişirilir veya karıştırılır.`,`${d} ve ${e} ile tamamlanıp taze servis edilir.`],
+[`${a} tuz ve baharatla marine edilip oda sıcaklığına getirilir.`,`${b} ve ${c} ile orta ateşte pişirilir.`,`${d} ve ${e} ile sos ya da garnitür hazırlanır.`,`5 dakika dinlendirilip servis edilir.`],
+[`${a} ve ${b} hazırlanır.`,`${c} ile kaplanır, doldurulur ya da harmanlanır.`,`Sıcak yağda veya fırında ${d} ile altın rengi alana dek pişirilir.`,`${e} ile servis edilir.`],
+[`${a} ve ${b} hazırlanıp ${c} ile karıştırılır.`,`${d} ile tatlandırılır; fırınlanır ya da buzdolabında dinlendirilir.`,`${e} ile süslenip servis edilir.`],
+[`Bardak buzla doldurulur.`,`${a} ve ${b} karıştırılır, gerekirse ezilir.`,`${c} ve ${d} eklenip çalkalanır.`,`${e} ile tamamlanıp hemen servis edilir.`],
+[`Shaker'a ${a}, ${b} ve ${c} konur.`,`Buzla 10–15 saniye çalkalanıp süzülür.`,`${d} ve ${e} ile süslenip servis edilir.`,`Sorumlu tüket: 18 yaş altına servis edilmez.`]][r.c]}
+const stp=r=>lang=="tr"?stpT(r):stpE(r);
+function stpE(r){const [a,b,c,d,e]=r.g.map(ig);return [
+[`Wash and cut ${a}, ${b} and ${c} into small pieces.`,`Season with ${d}; balance with salt and lemon.`,`Rest 10 minutes, garnish with ${e} and serve.`],
+[`Prepare ${a} and ${b}.`,`Cook or mix with ${c} in a pan or bowl.`,`Finish with ${d} and ${e} and serve fresh.`],
+[`Season ${a} with salt and spices and bring to room temperature.`,`Cook with ${b} and ${c} over medium heat.`,`Prepare a sauce or side with ${d} and ${e}.`,`Rest 5 minutes and serve.`],
+[`Prepare ${a} and ${b}.`,`Coat, stuff or combine with ${c}.`,`Cook in hot oil or the oven with ${d} until golden.`,`Serve with ${e}.`],
+[`Prepare ${a} and ${b} and combine with ${c}.`,`Sweeten with ${d}; bake or chill until set.`,`Garnish with ${e} and serve.`],
+[`Fill a glass with ice.`,`Stir or muddle ${a} and ${b}.`,`Add ${c} and ${d} and shake.`,`Finish with ${e} and serve right away.`],
+[`Add ${a}, ${b} and ${c} to a shaker.`,`Shake with ice for 10–15 seconds and strain.`,`Garnish with ${d} and ${e} and serve.`,`Drink responsibly: not for anyone under 18.`]][r.c]}
+function od(i){const r=R[i],f=r.c<5,m=t("ml").split("|");
+$("mb").innerHTML=`${img(r)}<div style="padding:14px 18px"><span class="tag">${cn(r.c)} · ${pn(r.p)}</span><h2 style="margin:4px 0">${nm(r)}</h2><div class="mu"><b>${r.v[0]} kcal</b> · ${m[0]} ${r.v[1]} · ${m[1]} ${r.v[2]} · ${m[2]} ${r.v[3]} (${t("per")})</div>
+${Object.keys(DK).filter(d=>DK[d](r)).map(d=>`<span class="pill" style="font-size:.75rem;padding:2px 10px;margin:6px 4px 0 0;display:inline-block">${t(DID[d])}</span>`).join("")}
+<h3>${t("ing")}${f?` <span class="mu">(${t("srv",{n:ds})})</span> <button class="pill" onclick="ds=Math.max(1,ds-1);od(${i})">−</button> <button class="pill" onclick="ds++;od(${i})">+</button>`:""}</h3>
+<ul>${r.g.map((x,j)=>`<li>${ig(x)}${f?` — ${AM[r.c][j]*ds} g`:""}</li>`).join("")}</ul>
+<h3>${t("guide")}</h3><ol>${stp(r).map(x=>`<li>${x}</li>`).join("")}</ol><p class="mu">${t("gnote")}</p>
+<button class="go" onclick="add(${i});cm()">${t("addb")}</button><button class="go" onclick="cm();pair(${i})">${t("pairb")}</button><button class="go" onclick="tf(${i})">${fav.has(i)?t("favd"):t("favb")}</button><button class="go" style="background:var(--ln);color:var(--tx)" onclick="cm()">${t("close")}</button></div>`;
+$("m").classList.remove("hide")}
+function cm(){$("m").classList.add("hide")}
+ui();
+</script></body></html>
